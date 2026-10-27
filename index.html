@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Avast Rewards</title>
+<meta name="description" content="Earn points every day with Avast Rewards. Search, explore, and redeem for gift cards and more." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111218'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='18' font-weight='700' text-anchor='middle' fill='%23FF7800'%3EA%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{
+    --gold:#FF7800;
+    --gold-soft:#FFEEDD;
+    --ink:#15161c;
+    --ink-soft:#5a5d6b;
+    --line:#ececf1;
+    --bg:#f5f6f8;
+    --card:#ffffff;
+    --green:#1a8f5a;
+    --shadow:0 1px 2px rgba(20,22,34,.06),0 8px 24px rgba(20,22,34,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* ---------- top nav ---------- */
+  header.nav{position:sticky;top:0;z-index:50;background:#111218;color:#fff}
+  .nav-inner{display:flex;align-items:center;gap:22px;height:60px}
+  .logo{display:flex;align-items:center;gap:0;font-weight:800;font-size:22px;letter-spacing:.3px}
+  .logo-img{height:26px;width:auto;display:block}
+  footer .logo-img{height:22px}
+  .logo .air{color:#fff}
+  .logo .find{color:var(--gold)}
+  .logo .tag{margin-left:12px;padding-left:12px;border-left:1px solid #33343d;font-weight:500;font-size:14px;color:#c9cad4;letter-spacing:.2px}
+  nav.links{display:flex;gap:26px;margin-left:14px;font-size:14px;color:#c9cad4}
+  nav.links a:hover{color:#fff}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:16px}
+  .pts{display:flex;align-items:center;gap:8px;background:#1d1e26;border:1px solid #2c2d37;padding:7px 14px;border-radius:999px;font-weight:700}
+  .pts .coin{width:18px;height:18px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));display:inline-block;box-shadow:inset 0 0 0 1.5px #D35400}
+  .pts .num{color:var(--gold)}
+  .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(145deg,#4a5bd6,#8b5cf6);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  .hamb{display:none}
+
+  /* ---------- greeting / status bar ---------- */
+  .hero{background:linear-gradient(120deg,#17181f 0%,#20222c 60%,#2a2130 100%);color:#fff;padding:34px 0 86px}
+  .hello{font-size:26px;font-weight:700;margin:0 0 4px}
+  .hello .wave{display:inline-block;transform:translateY(-1px)}
+  .sub{color:#b9bac6;font-size:15px;margin:0}
+  .status-row{display:flex;gap:16px;margin-top:26px;flex-wrap:wrap}
+  .stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:16px 20px;min-width:180px;flex:1}
+  .stat .k{font-size:12.5px;color:#b9bac6;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+  .stat .v{font-size:24px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .stat .v small{font-size:13px;font-weight:600;color:#9a9bab}
+  .lvlbar{height:7px;border-radius:99px;background:rgba(255,255,255,.14);margin-top:12px;overflow:hidden}
+  .lvlbar > i{display:block;height:100%;width:72%;background:linear-gradient(90deg,#FFA94D,var(--gold))}
+
+  /* ---------- content ---------- */
+  main{padding-bottom:70px}
+  .deck{margin-top:-58px}
+  .sec-title{display:flex;align-items:center;justify-content:space-between;margin:34px 2px 14px}
+  .sec-title h2{font-size:18px;margin:0;font-weight:700}
+  .sec-title a{font-size:13.5px;color:var(--ink-soft);font-weight:600}
+  .sec-title a:hover{color:var(--gold)}
+
+  .grid{display:grid;gap:16px}
+  .daily{grid-template-columns:repeat(3,1fr)}
+  .ways{grid-template-columns:repeat(2,1fr)}
+  .feat{grid-template-columns:repeat(4,1fr)}
+  a.card{color:inherit}
+  .feat .card .ic{margin-bottom:12px}
+  .feat .card .arrow{margin-top:14px;font-size:13px;font-weight:700;color:var(--gold);display:flex;align-items:center;gap:6px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;position:relative;transition:transform .12s ease,box-shadow .12s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(20,22,34,.08),0 14px 34px rgba(20,22,34,.12)}
+  .card .ic{width:44px;height:44px;border-radius:12px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+  .card h3{font-size:15.5px;margin:0 0 6px;font-weight:700;line-height:1.3}
+  .card p{font-size:13.5px;color:var(--ink-soft);margin:0 0 16px;line-height:1.45;flex:1}
+  .card .foot{display:flex;align-items:center;justify-content:space-between}
+  .earn{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13.5px;color:#B34700}
+  .earn .coin{width:15px;height:15px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.3px #D35400}
+  .go{font-size:13px;font-weight:700;color:var(--gold);display:flex;align-items:center;gap:5px}
+  .done{color:var(--green);font-weight:700;font-size:13px;display:flex;align-items:center;gap:5px}
+  .badge{position:absolute;top:14px;right:14px;font-size:11px;font-weight:700;color:#B34700;background:var(--gold-soft);padding:3px 9px;border-radius:99px}
+
+  /* list style ways-to-earn */
+  .list{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+  .row{display:flex;align-items:center;gap:16px;padding:16px 20px;border-top:1px solid var(--line)}
+  .row:first-child{border-top:0}
+  .row .ic{width:40px;height:40px;border-radius:11px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:19px;flex:0 0 auto}
+  .row .body{flex:1;min-width:0}
+  .row .body h4{margin:0 0 3px;font-size:14.5px;font-weight:700}
+  .row .body span{font-size:13px;color:var(--ink-soft)}
+  .row .amt{font-weight:800;font-size:14px;color:#B34700;display:flex;align-items:center;gap:6px;flex:0 0 auto}
+  .row .amt .coin{width:14px;height:14px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.2px #D35400}
+  .row .btn{flex:0 0 auto}
+
+  .btn{border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:10px;background:var(--gold);color:#15161c;transition:filter .12s}
+  .btn:hover{filter:brightness(.95)}
+  .btn.ghost{background:#f1f2f5;color:var(--ink)}
+
+  /* streak punch card */
+  .streak{background:linear-gradient(120deg,#fff 0%,#FFF4EA 100%);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:22px}
+  .streak .top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  .streak h3{margin:0;font-size:16px;font-weight:800}
+  .streak .sub2{font-size:13px;color:var(--ink-soft);margin:4px 0 0}
+  .punch{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .day{flex:1;min-width:64px;text-align:center}
+  .day .dot{height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;border:1.5px dashed #F3C29A;color:#C75B1A;background:#FFFAF5}
+  .day.hit .dot{background:linear-gradient(145deg,#FFA94D,var(--gold));border:0;color:#15161c;box-shadow:0 4px 12px rgba(242,176,30,.35)}
+  .day.today .dot{border:2px solid var(--gold);color:#B34700;background:#fff}
+  .day label{display:block;font-size:11.5px;color:var(--ink-soft);margin-top:7px;font-weight:600}
+
+  /* redeem */
+  .redeem{grid-template-columns:repeat(4,1fr)}
+  .rcard{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:transform .12s,box-shadow .12s}
+  .rcard:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,22,34,.12)}
+  .rcard .thumb{height:118px;display:flex;align-items:center;justify-content:center;font-size:40px;color:#fff}
+  .rcard .meta{padding:14px 16px}
+  .rcard h4{margin:0 0 4px;font-size:14.5px;font-weight:700}
+  .rcard .price{font-size:13px;color:#B34700;font-weight:800;display:flex;align-items:center;gap:6px}
+  .rcard .price .coin{width:14px;height:14px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.2px #D35400}
+
+  /* footer */
+  footer{background:#111218;color:#9a9bab;padding:40px 0;margin-top:10px;font-size:13px}
+  .foot-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px}
+  .foot-inner .logo{font-size:18px}
+  .foot-links{display:flex;gap:22px;flex-wrap:wrap}
+  .foot-links a:hover{color:#fff}
+
+  @media(max-width:900px){
+    .daily{grid-template-columns:1fr 1fr}
+    .redeem{grid-template-columns:1fr 1fr}
+    nav.links{display:none}
+  }
+  @media(max-width:620px){
+    .daily,.ways,.redeem{grid-template-columns:1fr}
+    .logo .tag{display:none}
+    .pts .lbl{display:none}
+    .hello{font-size:22px}
+    .stat{min-width:140px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="logo"><img class="logo-img" src="avast-logo.svg" alt="Avast" /><span class="tag">Rewards</span></div>
+    <nav class="links">
+      <a href="#earn">Earn</a>
+      <a href="#redeem">Redeem</a>
+      <a href="#">About</a>
+      <a href="#">Help</a>
+    </nav>
+    <div class="nav-right">
+      <div class="pts"><span class="coin"></span><span class="lbl" style="color:#c9cad4;font-weight:600">Balance</span><span class="num">4,280</span></div>
+      <div class="avatar">AG</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO / STATUS ============ -->
+<section class="hero">
+  <div class="wrap">
+    <h1 class="hello">Good evening, Aly <span class="wave">👋</span></h1>
+    <p class="sub">You're <strong style="color:#fff">90 points</strong> away from your next reward. Keep the streak going.</p>
+
+    <div class="status-row">
+      <div class="stat">
+        <div class="k">Available points</div>
+        <div class="v"><span class="coin" style="width:20px;height:20px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));display:inline-block"></span>4,280</div>
+      </div>
+      <div class="stat">
+        <div class="k">Earned today</div>
+        <div class="v">90 <small>/ 150 goal</small></div>
+      </div>
+      <div class="stat">
+        <div class="k">Current streak</div>
+        <div class="v">12 <small>days 🔥</small></div>
+      </div>
+      <div class="stat">
+        <div class="k">Level · Gold Member</div>
+        <div class="v" style="font-size:16px">Level 2</div>
+        <div class="lvlbar"><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <!-- ============ FEATURED EARN HUB ============ -->
+  <div class="deck" id="earn">
+    <div class="sec-title">
+      <h2>Ways to earn</h2>
+      <a href="#ways">See all</a>
+    </div>
+    <div class="grid feat">
+      <a class="card" href="ask.html">
+        <span class="badge">+5</span>
+        <div class="ic">🔎</div>
+        <h3>Ask a question</h3>
+        <p>Get an instant answer and earn points for every question.</p>
+        <span class="arrow">Ask now →</span>
+      </a>
+      <a class="card" href="read.html">
+        <span class="badge">+20</span>
+        <div class="ic">📰</div>
+        <h3>Read an article</h3>
+        <p>Read today's story and earn as you scroll to the end.</p>
+        <span class="arrow">Read &amp; earn →</span>
+      </a>
+      <a class="card" href="games.html">
+        <span class="badge">+30</span>
+        <div class="ic">🎮</div>
+        <h3>Play a game</h3>
+        <p>Beat the 20-second Coin Rush and bank the points.</p>
+        <span class="arrow">Play now →</span>
+      </a>
+      <a class="card" href="shop.html">
+        <span class="badge">10%</span>
+        <div class="ic">🛍️</div>
+        <h3>Go shopping</h3>
+        <p>Activate a store and earn up to 10% back in points.</p>
+        <span class="arrow">Shop &amp; earn →</span>
+      </a>
+    </div>
+
+    <!-- ============ DAILY SET ============ -->
+    <div class="sec-title">
+      <h2>Daily set</h2>
+      <a href="#">Resets in 06:21:44</a>
+    </div>
+    <div class="grid daily">
+      <div class="card">
+        <span class="badge">+10</span>
+        <div class="ic">🔎</div>
+        <h3>What's trending today?</h3>
+        <p>Run a quick search on today's top story and pick up your daily points.</p>
+        <div class="foot"><span class="earn"><span class="coin"></span>10 points</span><span class="go">Start →</span></div>
+      </div>
+      <div class="card">
+        <span class="badge">+10</span>
+        <div class="ic">🧠</div>
+        <h3>Daily poll</h3>
+        <p>Cast your vote in today's one-tap poll. Takes five seconds, no wrong answers.</p>
+        <div class="foot"><span class="earn"><span class="coin"></span>10 points</span><span class="go">Vote →</span></div>
+      </div>
+      <div class="card">
+        <div class="ic">✅</div>
+        <h3>This or that quiz</h3>
+        <p>Nice work — you finished today's quiz and banked the bonus.</p>
+        <div class="foot"><span class="earn"><span class="coin"></span>30 earned</span><span class="done">✓ Complete</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STREAK ============ -->
+  <div class="sec-title"><h2>Your streak</h2><a href="#">How streaks work</a></div>
+  <div class="streak">
+    <div class="top">
+      <div>
+        <h3>🔥 12-day streak</h3>
+        <p class="sub2">Hit your daily goal 3 more days to unlock a <strong>+250 point</strong> streak bonus.</p>
+      </div>
+      <button class="btn">Claim daily check-in · +5</button>
+    </div>
+    <div class="punch">
+      <div class="day hit"><div class="dot">✓</div><label>Mon</label></div>
+      <div class="day hit"><div class="dot">✓</div><label>Tue</label></div>
+      <div class="day hit"><div class="dot">✓</div><label>Wed</label></div>
+      <div class="day hit"><div class="dot">✓</div><label>Thu</label></div>
+      <div class="day today"><div class="dot">5</div><label>Today</label></div>
+      <div class="day"><div class="dot">6</div><label>Sat</label></div>
+      <div class="day"><div class="dot">7</div><label>Sun</label></div>
+    </div>
+  </div>
+
+  <!-- ============ WAYS TO EARN ============ -->
+  <div class="sec-title" id="ways"><h2>More ways to earn</h2><a href="#">See all</a></div>
+  <div class="grid ways">
+    <div class="list">
+      <div class="row">
+        <div class="ic">🔍</div>
+        <div class="body"><h4>Search the web</h4><span>Up to 150 points a day, 5 points per search</span></div>
+        <span class="amt"><span class="coin"></span>150</span>
+        <a class="btn" href="ask.html">Search</a>
+      </div>
+      <div class="row">
+        <div class="ic">📱</div>
+        <div class="body"><h4>Search on mobile</h4><span>Earn on the go with the Avast app</span></div>
+        <span class="amt"><span class="coin"></span>100</span>
+        <button class="btn ghost">Get app</button>
+      </div>
+      <div class="row">
+        <div class="ic">🛡️</div>
+        <div class="body"><h4>Complete your profile</h4><span>Add a recovery email to secure your account</span></div>
+        <span class="amt"><span class="coin"></span>50</span>
+        <button class="btn ghost">Set up</button>
+      </div>
+      <div class="row">
+        <div class="ic">📰</div>
+        <div class="body"><h4>Read the daily brief</h4><span>Catch today's headlines, earn as you scroll</span></div>
+        <span class="amt"><span class="coin"></span>20</span>
+        <a class="btn ghost" href="read.html">Read</a>
+      </div>
+    </div>
+    <div class="list">
+      <div class="row">
+        <div class="ic">🎁</div>
+        <div class="body"><h4>Refer a friend</h4><span>You both earn when they join Avast Rewards</span></div>
+        <span class="amt"><span class="coin"></span>500</span>
+        <button class="btn">Invite</button>
+      </div>
+      <div class="row">
+        <div class="ic">🛒</div>
+        <div class="body"><h4>Shop & earn</h4><span>Up to 10% back in points at partner stores</span></div>
+        <span class="amt"><span class="coin"></span>10%</span>
+        <a class="btn ghost" href="shop.html">Browse</a>
+      </div>
+      <div class="row">
+        <div class="ic">⭐</div>
+        <div class="body"><h4>Rate the app</h4><span>Leave a review on the store, one-time bonus</span></div>
+        <span class="amt"><span class="coin"></span>75</span>
+        <button class="btn ghost">Rate</button>
+      </div>
+      <div class="row">
+        <div class="ic">🎯</div>
+        <div class="body"><h4>Play &amp; earn — Coin Rush</h4><span>Beat the 20-second game for up to 30 points</span></div>
+        <span class="amt"><span class="coin"></span>30</span>
+        <a class="btn ghost" href="games.html">Play</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ REDEEM ============ -->
+  <div class="sec-title" id="redeem"><h2>Redeem your points</h2><a href="#">View all rewards</a></div>
+  <div class="grid redeem">
+    <div class="rcard">
+      <div class="thumb" style="background:linear-gradient(135deg,#e8502e,#ff7a45)">🎵</div>
+      <div class="meta"><h4>$5 Streaming credit</h4><div class="price"><span class="coin"></span>5,000 points</div></div>
+    </div>
+    <div class="rcard">
+      <div class="thumb" style="background:linear-gradient(135deg,#1a73e8,#4a9bff)">🛒</div>
+      <div class="meta"><h4>$10 Shopping card</h4><div class="price"><span class="coin"></span>9,500 points</div></div>
+    </div>
+    <div class="rcard">
+      <div class="thumb" style="background:linear-gradient(135deg,#1a8f5a,#34c77b)">☕</div>
+      <div class="meta"><h4>$5 Coffee card</h4><div class="price"><span class="coin"></span>5,000 points</div></div>
+    </div>
+    <div class="rcard">
+      <div class="thumb" style="background:linear-gradient(135deg,#8b5cf6,#b98bff)">❤️</div>
+      <div class="meta"><h4>Donate to charity</h4><div class="price"><span class="coin"></span>Any amount</div></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap foot-inner">
+    <div>
+      <div class="logo"><img class="logo-img" src="avast-logo.svg" alt="Avast" /><span class="tag" style="color:#9a9bab;border-color:#33343d">Rewards</span></div>
+      <p style="margin:12px 0 0;max-width:320px;line-height:1.5">Earn points for the things you already do online. Redeem for gift cards, donations, and more.</p>
+    </div>
+    <div class="foot-links">
+      <a href="#">How it works</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Support</a>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:26px;color:#6c6d79;font-size:12px">© 2026 Avast Software s.r.o. Avast Rewards is a rewards program for Avast Secure Browser.</div>
+</footer>
+
+</body>
+</html>

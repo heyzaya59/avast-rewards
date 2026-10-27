@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Play &amp; Earn · Avast Rewards</title>
+<meta name="description" content="Play a quick game and earn Avast Rewards points." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111218'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='18' font-weight='700' text-anchor='middle' fill='%23FF7800'%3EA%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{--gold:#FF7800;--gold-soft:#FFEEDD;--ink:#15161c;--ink-soft:#5a5d6b;--line:#ececf1;--bg:#f5f6f8;--card:#fff;--green:#1a8f5a;--shadow:0 1px 2px rgba(20,22,34,.06),0 8px 24px rgba(20,22,34,.06);}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  header.nav{position:sticky;top:0;z-index:50;background:#111218;color:#fff}
+  .nav-inner{display:flex;align-items:center;gap:18px;height:60px;max-width:1180px;margin:0 auto;padding:0 20px}
+  .logo{display:flex;align-items:center;font-weight:800;font-size:22px}
+  .logo .air{color:#fff}.logo .find{color:var(--gold)}
+  .logo .tag{margin-left:12px;padding-left:12px;border-left:1px solid #33343d;font-weight:500;font-size:14px;color:#c9cad4}
+  .ptschip{margin-left:auto;display:flex;align-items:center;gap:8px;background:#1d1e26;border:1px solid #2c2d37;padding:7px 14px;border-radius:999px;font-weight:700;font-size:14px}
+  .ptschip .coin{width:17px;height:17px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.4px #D35400}
+  .ptschip b{color:var(--gold)}
+  .back{font-size:13.5px;color:#c9cad4}.back:hover{color:#fff}
+
+  .head{text-align:center;padding:40px 0 6px}
+  .head .pts-tag{display:inline-flex;align-items:center;gap:7px;background:var(--gold-soft);color:#B34700;font-weight:800;font-size:13px;padding:6px 13px;border-radius:99px;margin-bottom:14px}
+  .head .pts-tag .coin{width:15px;height:15px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.3px #D35400}
+  .head h1{font-size:32px;letter-spacing:-.5px;margin:0 0 8px;font-weight:800}
+  .head p{color:var(--ink-soft);font-size:16px;margin:0}
+
+  .stage{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);margin:26px 0 20px;overflow:hidden}
+  .hud{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--line);font-weight:700}
+  .hud .l{display:flex;gap:22px;align-items:center}
+  .hud .k{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+  .hud .v{font-size:20px;font-weight:800}
+  .hud .v.score{color:#B34700;display:flex;align-items:center;gap:7px}
+  .hud .v.score .coin{width:17px;height:17px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.4px #D35400}
+  .hud .v.time{color:var(--ink)}
+  .arena{position:relative;height:380px;background:
+     radial-gradient(circle at 20% 20%,#FFF4EA,transparent 40%),
+     radial-gradient(circle at 80% 70%,#f3f0ff,transparent 40%),
+     #fafafc;overflow:hidden;cursor:crosshair}
+  .coinbtn{position:absolute;width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;
+     background:radial-gradient(circle at 35% 30%,#ffe9a8,var(--gold) 70%);
+     box-shadow:0 6px 16px rgba(242,176,30,.45),inset 0 0 0 3px #d79b11;
+     font-size:24px;display:flex;align-items:center;justify-content:center;
+     transition:transform .06s;animation:popin .18s ease}
+  .coinbtn:active{transform:scale(.86)}
+  @keyframes popin{from{transform:scale(0)}to{transform:scale(1)}}
+  .bomb{background:radial-gradient(circle at 35% 30%,#5a5c6b,#23242c 70%)!important;box-shadow:0 6px 16px rgba(0,0,0,.3),inset 0 0 0 3px #16171d!important}
+
+  .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:20px}
+  .center h2{margin:0;font-size:24px;font-weight:800}
+  .center p{margin:0;color:var(--ink-soft);font-size:14.5px;max-width:360px;line-height:1.5}
+  .big{font-size:46px;font-weight:900;color:#B34700;display:flex;align-items:center;gap:12px}
+  .big .coin{width:38px;height:38px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 2px #D35400}
+  .btn{border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:15px;padding:13px 28px;border-radius:12px;background:var(--gold);color:#15161c;transition:filter .12s}
+  .btn:hover{filter:brightness(.95)}
+  .btn.ghost{background:#f1f2f5;color:var(--ink)}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .note{text-align:center;color:var(--ink-soft);font-size:13px;margin:0 0 50px}
+
+  /* other games */
+  .more{margin:10px 0 70px}
+  .more h3{font-size:16px;margin:0 0 14px}
+  .gcards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .gcard{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:18px;text-align:center}
+  .gcard .ic{font-size:30px;margin-bottom:10px}
+  .gcard h4{margin:0 0 4px;font-size:14.5px}
+  .gcard span{font-size:12.5px;color:#B34700;font-weight:700}
+  .soon{color:var(--ink-soft)!important}
+  @media(max-width:620px){.head h1{font-size:26px}.gcards{grid-template-columns:1fr}.arena{height:320px}.logo .tag{display:none}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><img class="logo-img" src="avast-logo.svg" alt="Avast" /><span class="tag">Rewards</span></div>
+    <div class="ptschip"><span class="coin"></span><b id="bal">4,280</b></div>
+    <a class="back" href="index.html">← Dashboard</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="head">
+    <span class="pts-tag"><span class="coin"></span>Earn up to 30 points · one play per day</span>
+    <h1>Coin Rush</h1>
+    <p>Tap the gold coins before they vanish. Dodge the bombs. 20 seconds on the clock.</p>
+  </div>
+
+  <div class="stage">
+    <div class="hud">
+      <div class="l">
+        <div><div class="k">Score</div><div class="v score"><span class="coin"></span><span id="score">0</span></div></div>
+        <div><div class="k">Time</div><div class="v time" id="time">0:20</div></div>
+      </div>
+      <div><div class="k">Best today</div><div class="v" id="best">—</div></div>
+    </div>
+    <div class="arena" id="arena">
+      <div class="center" id="start">
+        <h2>Ready to play?</h2>
+        <p>Each coin = 1 point, capped at 30 toward rewards. Hit a bomb and you lose a coin!</p>
+        <button class="btn" id="go">▶ Start game</button>
+      </div>
+    </div>
+  </div>
+  <p class="note">Tip: coins get faster as the clock runs down. 👀</p>
+
+  <div class="more">
+    <h3>More games</h3>
+    <div class="gcards">
+      <div class="gcard"><div class="ic">🧠</div><h4>Memory Match</h4><span>+15 points</span></div>
+      <div class="gcard"><div class="ic">🎯</div><h4>Daily Trivia</h4><span>+20 points</span></div>
+      <div class="gcard"><div class="ic">🧩</div><h4>Word Puzzle</h4><span class="soon">Coming soon</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var arena=document.getElementById('arena'), scoreEl=document.getElementById('score'),
+      timeEl=document.getElementById('time'), bal=document.getElementById('bal'),
+      bestEl=document.getElementById('best'), startPanel=document.getElementById('start');
+  var score=0, time=20, balance=4280, playing=false, spawnT, tickT, cap=30;
+
+  document.getElementById('go').onclick=start;
+
+  function start(){
+    score=0;time=20;playing=true;scoreEl.textContent='0';timeEl.textContent='0:20';
+    startPanel.remove();
+    tickT=setInterval(tick,1000);
+    spawn();
+  }
+  function tick(){
+    time--; timeEl.textContent='0:'+(time<10?'0':'')+time;
+    if(time<=0) end();
+  }
+  function spawn(){
+    if(!playing)return;
+    var isBomb=Math.random()<0.22;
+    var b=document.createElement('button');
+    b.className='coinbtn'+(isBomb?' bomb':'');
+    b.textContent=isBomb?'💣':'🪙';
+    var pad=60;
+    b.style.left=(Math.random()*(arena.clientWidth-pad))+'px';
+    b.style.top=(Math.random()*(arena.clientHeight-pad))+'px';
+    b.onclick=function(ev){
+      ev.stopPropagation();
+      if(isBomb){ score=Math.max(0,score-1); flash(b,'#23242c'); }
+      else{ score++; flash(b,'#FF7800'); }
+      scoreEl.textContent=score;
+      b.remove();
+    };
+    arena.appendChild(b);
+    var life=Math.max(650, 1300 - (20-time)*55);
+    setTimeout(function(){ if(b.parentNode) b.remove(); }, life);
+    var gap=Math.max(360, 820 - (20-time)*30);
+    spawnT=setTimeout(spawn, gap);
+  }
+  function flash(el,c){ el.style.boxShadow='0 0 0 6px '+c+'33'; }
+  function end(){
+    playing=false; clearInterval(tickT); clearTimeout(spawnT);
+    Array.prototype.forEach.call(arena.querySelectorAll('.coinbtn'),function(x){x.remove();});
+    var pts=Math.min(cap,score); balance+=pts; bal.textContent=balance.toLocaleString();
+    bestEl.textContent=score;
+    var panel=document.createElement('div');
+    panel.className='center';
+    panel.innerHTML='<div class="big"><span class="coin"></span>+'+pts+'</div>'+
+      '<h2>Time! You scored '+score+'</h2>'+
+      '<p>'+(score>pts?('Capped at '+cap+' points toward rewards today — nice run.'):'Points added to your balance.')+'</p>'+
+      '<div class="cta"><a class="btn" href="index.html">Back to dashboard</a><button class="btn ghost" id="again">Play again</button></div>';
+    arena.appendChild(panel);
+    document.getElementById('again').onclick=function(){panel.remove();start();};
+    try{localStorage.setItem('af_game_'+new Date().toDateString(),String(score));}catch(e){}
+  }
+</script>
+</body>
+</html>

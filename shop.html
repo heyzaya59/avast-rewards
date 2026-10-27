@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shop &amp; Earn · Avast Rewards</title>
+<meta name="description" content="Shop at partner stores and earn points back with Avast Rewards." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111218'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='18' font-weight='700' text-anchor='middle' fill='%23FF7800'%3EA%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{--gold:#FF7800;--gold-soft:#FFEEDD;--ink:#15161c;--ink-soft:#5a5d6b;--line:#ececf1;--bg:#f5f6f8;--card:#fff;--green:#1a8f5a;--shadow:0 1px 2px rgba(20,22,34,.06),0 8px 24px rgba(20,22,34,.06);}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  header.nav{position:sticky;top:0;z-index:50;background:#111218;color:#fff}
+  .nav-inner{display:flex;align-items:center;gap:18px;height:60px;max-width:1180px;margin:0 auto;padding:0 20px}
+  .logo{display:flex;align-items:center;font-weight:800;font-size:22px}
+  .logo .air{color:#fff}.logo .find{color:var(--gold)}
+  .logo .tag{margin-left:12px;padding-left:12px;border-left:1px solid #33343d;font-weight:500;font-size:14px;color:#c9cad4}
+  .ptschip{margin-left:auto;display:flex;align-items:center;gap:8px;background:#1d1e26;border:1px solid #2c2d37;padding:7px 14px;border-radius:999px;font-weight:700;font-size:14px}
+  .ptschip .coin{width:17px;height:17px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.4px #D35400}
+  .ptschip b{color:var(--gold)}
+  .back{font-size:13.5px;color:#c9cad4}.back:hover{color:#fff}
+
+  /* hero */
+  .hero{background:linear-gradient(120deg,#17181f,#241c30);color:#fff;border-radius:0}
+  .hero-in{max-width:1080px;margin:0 auto;padding:40px 20px 46px}
+  .hero .pts-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(242,176,30,.15);color:var(--gold);font-weight:800;font-size:13px;padding:6px 13px;border-radius:99px;margin-bottom:14px}
+  .hero h1{font-size:32px;letter-spacing:-.5px;margin:0 0 8px;font-weight:800}
+  .hero p{color:#b9bac6;font-size:16px;margin:0;max-width:540px;line-height:1.5}
+
+  .searchbar{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:4px 6px 4px 16px;margin-top:22px;max-width:460px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+  .searchbar input{flex:1;border:0;outline:0;font-size:15px;font-family:inherit;padding:11px 0}
+  .searchbar .b{background:var(--gold);color:#15161c;border:0;font-weight:700;padding:10px 18px;border-radius:10px;cursor:pointer;font-family:inherit}
+
+  .sec-title{display:flex;align-items:center;justify-content:space-between;margin:34px 2px 16px}
+  .sec-title h2{font-size:19px;margin:0;font-weight:800}
+  .sec-title a{font-size:13.5px;color:var(--ink-soft);font-weight:600}
+
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:10px}
+  .store{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:transform .12s,box-shadow .12s;display:flex;flex-direction:column}
+  .store:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,22,34,.12)}
+  .store .logo-wrap{height:92px;display:flex;align-items:center;justify-content:center;font-size:38px;color:#fff}
+  .store .info{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
+  .store h3{margin:0 0 4px;font-size:15px;font-weight:700}
+  .store .rate{font-size:13.5px;font-weight:800;color:#B34700;display:flex;align-items:center;gap:6px;margin-bottom:14px}
+  .store .rate .coin{width:14px;height:14px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.2px #D35400}
+  .store .was{color:var(--ink-soft);font-weight:600;text-decoration:line-through;font-size:12px;margin-left:4px}
+  .act{margin-top:auto;border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:13.5px;padding:10px;border-radius:10px;background:var(--gold);color:#15161c;transition:.12s}
+  .act:hover{filter:brightness(.95)}
+  .act.on{background:#e8f6ee;color:var(--green);cursor:default}
+
+  /* featured deals */
+  .deals{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:70px}
+  .deal{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px;display:flex;gap:16px;align-items:center}
+  .deal .ic{width:52px;height:52px;border-radius:13px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:26px;flex:0 0 auto}
+  .deal h4{margin:0 0 3px;font-size:15px}
+  .deal p{margin:0;font-size:13px;color:var(--ink-soft)}
+  .deal .tag{display:inline-block;margin-top:6px;font-size:12px;font-weight:800;color:#B34700;background:var(--gold-soft);padding:3px 9px;border-radius:99px}
+
+  @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.deals{grid-template-columns:1fr}}
+  @media(max-width:620px){.hero h1{font-size:26px}.grid{grid-template-columns:1fr 1fr}.logo .tag{display:none}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><img class="logo-img" src="avast-logo.svg" alt="Avast" /><span class="tag">Rewards</span></div>
+    <div class="ptschip"><span class="coin"></span><b id="bal">4,280</b></div>
+    <a class="back" href="index.html">← Dashboard</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <span class="pts-tag">🛍️ Earn up to 10% back in points</span>
+    <h1>Shop &amp; earn</h1>
+    <p>Activate a store, then shop like normal. Points land in your balance after your purchase confirms — on top of any sale.</p>
+    <div class="searchbar">
+      <span>🔎</span>
+      <input placeholder="Search 1,000+ stores…" />
+      <button class="b">Search</button>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="sec-title"><h2>Popular stores</h2><a href="#">See all</a></div>
+  <div class="grid" id="stores">
+    <div class="store" data-pts="2">
+      <div class="logo-wrap" style="background:linear-gradient(135deg,#ff9900,#ffb84d)">📦</div>
+      <div class="info"><h3>MegaMart</h3><div class="rate"><span class="coin"></span>Up to 4% back</div><button class="act">Activate · +2</button></div>
+    </div>
+    <div class="store" data-pts="2">
+      <div class="logo-wrap" style="background:linear-gradient(135deg,#1a73e8,#4a9bff)">👟</div>
+      <div class="info"><h3>StrideFit</h3><div class="rate"><span class="coin"></span>Up to 6% back</div><button class="act">Activate · +2</button></div>
+    </div>
+    <div class="store" data-pts="2">
+      <div class="logo-wrap" style="background:linear-gradient(135deg,#1a8f5a,#34c77b)">🥗</div>
+      <div class="info"><h3>FreshCart</h3><div class="rate"><span class="coin"></span>Up to 3% back</div><button class="act">Activate · +2</button></div>
+    </div>
+    <div class="store" data-pts="2">
+      <div class="logo-wrap" style="background:linear-gradient(135deg,#e8502e,#ff7a45)">🎧</div>
+      <div class="info"><h3>SoundHub</h3><div class="rate"><span class="coin"></span>Up to 8% back</div><button class="act">Activate · +2</button></div>
+    </div>
+    <div class="store" data-pts="2">
+      <div class="logo-wrap" style="background:linear-gradient(135deg,#8b5cf6,#b98bff)">💄</div>
+      <div class="info"><h3>GlowBeauty</h3><div class="rate"><span class="coin"></span>Up to 10% back</div><button class="act">Activate · +2</button></div>
+    </div>
+    <div class="store" data-pts="2">
+      <div class="logo-wrap" style="background:linear-gradient(135deg,#0f766e,#2dd4bf)">✈️</div>
+      <div class="info"><h3>JetAway Travel</h3><div class="rate"><span class="coin"></span>Up to 5% back</div><button class="act">Activate · +2</button></div>
+    </div>
+    <div class="store" data-pts="2">
+      <div class="logo-wrap" style="background:linear-gradient(135deg,#be123c,#fb7185)">🍕</div>
+      <div class="info"><h3>SliceBox</h3><div class="rate"><span class="coin"></span>Up to 7% back</div><button class="act">Activate · +2</button></div>
+    </div>
+    <div class="store" data-pts="2">
+      <div class="logo-wrap" style="background:linear-gradient(135deg,#334155,#64748b)">🏡</div>
+      <div class="info"><h3>HomeNest</h3><div class="rate"><span class="coin"></span>Up to 4% back</div><button class="act">Activate · +2</button></div>
+    </div>
+  </div>
+
+  <div class="sec-title"><h2>Featured deals</h2><a href="#">More deals</a></div>
+  <div class="deals">
+    <div class="deal"><div class="ic">🔥</div><div><h4>Double points weekend</h4><p>8% back at StrideFit through Sunday</p><span class="tag">2× points</span></div></div>
+    <div class="deal"><div class="ic">🎁</div><div><h4>New shopper bonus</h4><p>+200 points on your first activated order</p><span class="tag">+200</span></div></div>
+    <div class="deal"><div class="ic">💳</div><div><h4>Link a card</h4><p>Auto-earn in-store, no clicks needed</p><span class="tag">+50</span></div></div>
+  </div>
+</div>
+
+<script>
+  var balance=4280, bal=document.getElementById('bal');
+  document.querySelectorAll('.store').forEach(function(s){
+    var btn=s.querySelector('.act'), pts=parseInt(s.getAttribute('data-pts'),10);
+    btn.onclick=function(){
+      if(btn.classList.contains('on'))return;
+      btn.classList.add('on');
+      btn.textContent='✓ Activated';
+      balance+=pts; bal.textContent=balance.toLocaleString();
+    };
+  });
+</script>
+</body>
+</html>

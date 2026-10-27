@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Read &amp; Earn · Avast Rewards</title>
+<meta name="description" content="Read today's article and earn Avast Rewards points as you go." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111218'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='18' font-weight='700' text-anchor='middle' fill='%23FF7800'%3EA%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{
+    --gold:#FF7800;--gold-soft:#FFEEDD;--ink:#15161c;--ink-soft:#5a5d6b;
+    --line:#ececf1;--bg:#f5f6f8;--card:#fff;--green:#1a8f5a;
+    --shadow:0 1px 2px rgba(20,22,34,.06),0 8px 24px rgba(20,22,34,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+
+  /* progress bar at very top */
+  .progress{position:fixed;top:0;left:0;height:4px;width:0%;background:linear-gradient(90deg,#FFA94D,var(--gold));z-index:70;transition:width .1s linear}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:50;background:#111218;color:#fff}
+  .nav-inner{display:flex;align-items:center;gap:18px;height:60px;max-width:1180px;margin:0 auto;padding:0 20px}
+  .logo{display:flex;align-items:center;font-weight:800;font-size:22px;letter-spacing:.3px}
+  .logo .air{color:#fff}.logo .find{color:var(--gold)}
+  .logo .tag{margin-left:12px;padding-left:12px;border-left:1px solid #33343d;font-weight:500;font-size:14px;color:#c9cad4}
+  .back{margin-left:auto;font-size:14px;color:#c9cad4;display:flex;align-items:center;gap:6px}
+  .back:hover{color:#fff}
+
+  /* floating earn pill */
+  .earnbar{position:sticky;top:60px;z-index:40;display:flex;justify-content:center;pointer-events:none;margin-top:-1px}
+  .earnpill{pointer-events:auto;margin-top:16px;background:#111218;color:#fff;border-radius:999px;padding:10px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(20,22,34,.25);font-size:14px}
+  .earnpill .coin{width:20px;height:20px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.5px #D35400;flex:0 0 auto}
+  .earnpill .track{width:120px;height:6px;border-radius:99px;background:#2c2d37;overflow:hidden}
+  .earnpill .track > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#FFA94D,var(--gold));transition:width .15s}
+  .earnpill b{color:var(--gold)}
+
+  /* article */
+  article{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);margin:26px auto 40px;overflow:hidden}
+  .cover{height:220px;background:linear-gradient(135deg,#1a73e8 0%,#8b5cf6 55%,#e8502e 100%);display:flex;align-items:flex-end;position:relative}
+  .cover .emoji{position:absolute;top:24px;right:28px;font-size:54px;opacity:.9}
+  .cover .cat{margin:0 0 18px 28px;background:rgba(0,0,0,.28);color:#fff;font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:6px 12px;border-radius:99px;backdrop-filter:blur(4px)}
+  .body{padding:30px 34px 40px}
+  .pts-tag{display:inline-flex;align-items:center;gap:7px;background:var(--gold-soft);color:#B34700;font-weight:800;font-size:13px;padding:6px 12px;border-radius:99px;margin-bottom:16px}
+  .pts-tag .coin{width:15px;height:15px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 1.3px #D35400}
+  h1{font-size:30px;line-height:1.2;margin:0 0 14px;font-weight:800;letter-spacing:-.4px}
+  .meta{display:flex;align-items:center;gap:12px;color:var(--ink-soft);font-size:13.5px;margin-bottom:26px;border-bottom:1px solid var(--line);padding-bottom:20px}
+  .meta .dot{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,#4a5bd6,#8b5cf6);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+  .body p{font-size:17px;line-height:1.72;color:#2b2d38;margin:0 0 22px}
+  .body h2{font-size:21px;margin:34px 0 14px;font-weight:800;letter-spacing:-.2px}
+  .body blockquote{margin:28px 0;padding:4px 0 4px 20px;border-left:4px solid var(--gold);font-size:19px;line-height:1.6;font-weight:600;color:#1a1b22}
+
+  /* completion card */
+  .done-card{max-width:760px;margin:0 auto 70px;background:linear-gradient(135deg,#111218,#241c30);border-radius:18px;padding:34px;color:#fff;text-align:center;box-shadow:0 18px 50px rgba(20,22,34,.25);display:none}
+  .done-card.show{display:block;animation:pop .4s ease}
+  @keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+  .done-card .big{font-size:40px;font-weight:900;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:6px}
+  .done-card .big .coin{width:34px;height:34px;border-radius:50%;background:linear-gradient(145deg,#FFA94D,var(--gold));box-shadow:inset 0 0 0 2px #D35400}
+  .done-card p{color:#c9cad4;margin:4px 0 22px;font-size:15px}
+  .cta{display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .btn{border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:14.5px;padding:12px 22px;border-radius:12px;background:var(--gold);color:#15161c;transition:filter .12s}
+  .btn:hover{filter:brightness(.95)}
+  .btn.ghost{background:rgba(255,255,255,.1);color:#fff}
+
+  @media(max-width:620px){
+    h1{font-size:24px}.body{padding:24px 22px 32px}.body p{font-size:16px}
+    .earnpill .track{width:80px}.logo .tag{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="bar"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><img class="logo-img" src="avast-logo.svg" alt="Avast" /><span class="tag">Rewards</span></div>
+    <a class="back" href="index.html">← Back to dashboard</a>
+  </div>
+</header>
+
+<!-- floating earn tracker -->
+<div class="earnbar">
+  <div class="earnpill">
+    <span class="coin"></span>
+    <span id="earnlabel">Read to earn <b>+20</b></span>
+    <span class="track"><i id="earnfill"></i></span>
+  </div>
+</div>
+
+<div class="wrap">
+  <article>
+    <div class="cover">
+      <span class="emoji">🔎</span>
+      <span class="cat">Today's read · Technology</span>
+    </div>
+    <div class="body" id="content">
+      <span class="pts-tag"><span class="coin"></span>Earn 20 points · ~3 min read</span>
+      <h1>How AI is quietly rewriting the way we search the web</h1>
+      <div class="meta">
+        <span class="dot">AF</span>
+        <span>Avast Editorial</span>
+        <span>·</span>
+        <span>Oct 26, 2026</span>
+      </div>
+
+      <p>For two decades, searching the web meant typing a few words and scanning a wall of blue links. You did the work: the engine handed you ten doors, and you decided which to open. That bargain is changing fast — and the shift is less about flashier results than about who does the thinking.</p>
+
+      <p>The new generation of search blends classic retrieval with reasoning. Instead of returning a list and walking away, the system reads across sources, weighs them, and hands back an answer with the receipts attached. For most everyday questions, the ten blue links are becoming the fallback, not the main event.</p>
+
+      <h2>From keywords to intent</h2>
+      <p>Old search rewarded you for thinking like a machine — stripping a messy human question down to the two or three keywords an index could match. The irony was that the better you got at search, the less natural your queries became.</p>
+
+      <p>Modern systems flip that. You can ask the way you'd ask a knowledgeable friend — "what's a good lightweight laptop for travel that won't die on a long flight?" — and the engine untangles the intent, the constraints, and the trade-offs on your behalf. The skill is moving out of the user's hands and into the model's.</p>
+
+      <blockquote>"The best search no longer feels like searching. It feels like asking — and being understood the first time."</blockquote>
+
+      <h2>Why rewards fit the new model</h2>
+      <p>As search gets more capable, engagement matters more than raw query volume. A rewards layer — points for searching, reading, exploring — turns a one-off visit into a daily habit. It's a simple idea with a long history: give people a small, honest reason to come back, and make coming back worth their while.</p>
+
+      <p>That's the thinking behind programs like this one. Reading this article all the way through, for instance, just earned you points you can redeem for real things. No gimmicks, no catch — attention is valuable, and you should get a cut of it.</p>
+
+      <h2>What comes next</h2>
+      <p>Expect search to keep collapsing the distance between a question and a good answer. Expect it to get more personal, more conversational, and more woven into the apps you already use. And expect the companies that get it right to share the upside with the people who show up every day.</p>
+
+      <p>For now, the takeaway is simple: the web is getting easier to ask, and showing up has never paid off quite like this. Thanks for reading to the end — your points are on the way.</p>
+    </div>
+  </article>
+
+  <!-- completion -->
+  <div class="done-card" id="done">
+    <div class="big"><span class="coin"></span>+20</div>
+    <p>Nice — you finished today's read and earned <strong style="color:#fff">20 points</strong>. Come back tomorrow for a fresh article.</p>
+    <div class="cta">
+      <a class="btn" href="index.html">Back to dashboard</a>
+      <button class="btn ghost" onclick="location.reload()">Read another</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var content = document.getElementById('content');
+  var bar = document.getElementById('bar');
+  var fill = document.getElementById('earnfill');
+  var label = document.getElementById('earnlabel');
+  var done = document.getElementById('done');
+  var awarded = false;
+
+  function pct(){
+    var top = content.offsetTop;
+    var h = content.offsetHeight;
+    var scrolled = window.scrollY + window.innerHeight;
+    var p = (scrolled - top) / h;
+    return Math.max(0, Math.min(1, p));
+  }
+  function onScroll(){
+    var docP = (window.scrollY) / (document.body.scrollHeight - window.innerHeight);
+    bar.style.width = Math.min(100, docP*100) + '%';
+    var p = pct();
+    fill.style.width = (p*100).toFixed(0) + '%';
+    if(!awarded){
+      label.innerHTML = 'Reading… <b>+' + Math.round(p*20) + '</b> / 20';
+    }
+    if(p >= 0.985 && !awarded){
+      awarded = true;
+      fill.style.width = '100%';
+      label.innerHTML = '✓ Earned <b>+20</b>';
+      done.classList.add('show');
+      done.scrollIntoView({behavior:'smooth'});
+      try{ localStorage.setItem('af_read_'+new Date().toDateString(),'1'); }catch(e){}
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+</script>
+</body>
+</html>
