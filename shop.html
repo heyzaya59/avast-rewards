@@ -61,6 +61,7 @@
   @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.deals{grid-template-columns:1fr}}
   @media(max-width:620px){.hero h1{font-size:26px}.grid{grid-template-columns:1fr 1fr}.logo .tag{display:none}}
 </style>
+<link rel="stylesheet" href="app.css" />
 </head>
 <body>
 <header class="nav">
@@ -141,5 +142,14 @@
     };
   });
 </script>
+
+<!-- mobile tab bar -->
+<nav class="tabbar" aria-label="Primary">
+  <a href="index.html" class="tab"><span class="ti">🏠</span>Home</a>
+  <a href="index.html#earn" class="tab on"><span class="ti">🎯</span>Earn</a>
+  <a href="index.html#redeem" class="tab"><span class="ti">🎁</span>Redeem</a>
+  <a href="#" class="tab"><span class="ti">👤</span>You</a>
+</nav>
+
 </body>
 </html>

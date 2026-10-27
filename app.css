@@ -1,0 +1,104 @@
+/* =====================================================================
+   Avast Rewards — shared responsive layer
+   Loaded AFTER each page's inline <style> so it refines the mobile view
+   without disturbing the desktop layout. Desktop (>760px) is untouched
+   except for small polish; mobile gets an app-native bottom tab bar,
+   a swipeable stat carousel, and larger touch targets.
+   ===================================================================== */
+
+:root{ --tabbar-h:66px; }
+
+/* ---------- Bottom tab bar (mobile only) ---------- */
+.tabbar{display:none}
+
+.tabbar a{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:7px 0;min-height:52px;border-radius:13px;
+  font-size:11px;font-weight:700;letter-spacing:.2px;color:#8a8d9b;
+}
+.tabbar a .ti{font-size:21px;line-height:1;transition:transform .14s ease}
+.tabbar a.on{color:var(--gold)}
+.tabbar a.on .ti{transform:translateY(-1px);filter:drop-shadow(0 3px 8px rgba(255,120,0,.5))}
+.tabbar a:active{background:#f3f1f4}
+.tabbar a:active .ti{transform:scale(.9)}
+
+/* ---------- Mobile ---------- */
+@media(max-width:760px){
+  .tabbar{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:90;
+    background:rgba(255,255,255,.9);
+    -webkit-backdrop-filter:saturate(180%) blur(16px);
+    backdrop-filter:saturate(180%) blur(16px);
+    border-top:1px solid var(--line);
+    box-shadow:0 -8px 24px rgba(20,22,34,.06);
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  /* make room so the fixed bar never covers content/footer */
+  body{padding-bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom)) !important}
+
+  /* the desktop top-links are replaced by the tab bar on mobile */
+  header.nav nav.links{display:none}
+
+  /* tighter, lighter top bar on phones */
+  .nav-inner{height:56px;gap:12px}
+  .logo{font-size:19px}
+  .logo-img{height:23px}
+  .pts,.ptschip{padding:6px 12px;font-size:13px}
+  .avatar{width:30px;height:30px;font-size:13px}
+
+  /* comfortable default type + tap sizing */
+  .btn{padding:11px 18px;font-size:14px}
+  .go,.arrow,.sec-title a{min-height:24px}
+}
+
+/* ---------- Hero stats → swipeable carousel on phones ---------- */
+@media(max-width:620px){
+  .status-row{
+    flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    margin:22px -20px 0;padding:2px 20px 6px;gap:12px;
+  }
+  .status-row::-webkit-scrollbar{display:none}
+  .status-row{scrollbar-width:none}
+  .status-row .stat{flex:0 0 76%;scroll-snap-align:start;min-width:0;margin:0}
+
+  .hero{padding:26px 0 78px}
+  .hello{font-size:23px}
+  .deck{margin-top:-52px}
+
+  /* streak punch card: let the 7 days flow in a clean swipe row */
+  .punch{flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:16px -4px 0;padding:0 4px 4px}
+  .punch::-webkit-scrollbar{display:none}
+  .punch{scrollbar-width:none}
+  .day{flex:0 0 58px;min-width:58px}
+
+  /* ways-to-earn rows: keep the action tappable, never cramped */
+  .row{gap:12px;padding:15px 16px}
+  .row .btn{padding:9px 14px;font-size:13px}
+
+  /* featured earn hub: 4-up is far too tight on a phone → clean 2-up */
+  .feat{grid-template-columns:1fr 1fr;gap:12px}
+  .feat .card{padding:15px}
+  .feat .card .ic{width:40px;height:40px;font-size:20px;margin-bottom:10px}
+  .feat .card h3{font-size:14px;margin-bottom:4px}
+  .feat .card p{font-size:12.5px;margin-bottom:10px;line-height:1.4}
+
+  /* reward cards read better two-up than as full-width slabs */
+  .redeem{grid-template-columns:1fr 1fr;gap:12px}
+  .rcard .thumb{height:94px;font-size:34px}
+  .rcard .meta{padding:12px 13px}
+}
+
+/* ---------- Tiny phones ---------- */
+@media(max-width:380px){
+  .status-row .stat{flex:0 0 84%}
+  .logo .tag{display:none}
+}
+
+/* ---------- Accessibility ---------- */
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+}
+.tabbar a:focus-visible,
+header.nav a:focus-visible,
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}

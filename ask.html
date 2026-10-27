@@ -60,6 +60,7 @@
 
   @media(max-width:620px){.hero h1{font-size:26px}.askbtn span.lbl{display:none}.logo .tag{display:none}}
 </style>
+<link rel="stylesheet" href="app.css" />
 </head>
 <body>
 <header class="nav">
@@ -144,5 +145,14 @@
   form.addEventListener('submit',function(e){e.preventDefault();ask(q.value);});
   document.querySelectorAll('.chip').forEach(function(c){c.onclick=function(){q.value=c.textContent;ask(c.textContent);};});
 </script>
+
+<!-- mobile tab bar -->
+<nav class="tabbar" aria-label="Primary">
+  <a href="index.html" class="tab"><span class="ti">🏠</span>Home</a>
+  <a href="index.html#earn" class="tab on"><span class="ti">🎯</span>Earn</a>
+  <a href="index.html#redeem" class="tab"><span class="ti">🎁</span>Redeem</a>
+  <a href="#" class="tab"><span class="ti">👤</span>You</a>
+</nav>
+
 </body>
 </html>
