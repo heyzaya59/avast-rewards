@@ -62,9 +62,9 @@
   .status-row{scrollbar-width:none}
   .status-row .stat{flex:0 0 76%;scroll-snap-align:start;min-width:0;margin:0}
 
-  .hero{padding:26px 0 78px}
+  .hero{padding:24px 0 36px}
   .hello{font-size:23px}
-  .deck{margin-top:-52px}
+  .deck{margin-top:0}
 
   /* streak punch card: let the 7 days flow in a clean swipe row */
   .punch{flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:16px -4px 0;padding:0 4px 4px}
@@ -72,9 +72,21 @@
   .punch{scrollbar-width:none}
   .day{flex:0 0 58px;min-width:58px}
 
-  /* ways-to-earn rows: keep the action tappable, never cramped */
-  .row{gap:12px;padding:15px 16px}
-  .row .btn{padding:9px 14px;font-size:13px}
+  /* ways-to-earn rows: at 390px the icon+text+points+button can't share one
+     flex line, so points/button spilled off-screen. Switch to a grid — icon on
+     the left, text fills the middle (min-width:0 so it wraps instead of pushing
+     wide), points + button stack on the right. Nothing can overflow now. */
+  .row{
+    display:grid;align-items:center;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    grid-template-areas:"ic body amt" "ic body btn";
+    column-gap:12px;row-gap:8px;padding:14px 16px;
+  }
+  .row .ic{grid-area:ic}
+  .row .body{grid-area:body;min-width:0}
+  .row .body span{display:block}
+  .row .amt{grid-area:amt;justify-self:end}
+  .row .btn{grid-area:btn;justify-self:end;padding:8px 15px;font-size:13px;white-space:nowrap}
 
   /* featured earn hub: 4-up is far too tight on a phone → clean 2-up */
   .feat{grid-template-columns:1fr 1fr;gap:12px}
